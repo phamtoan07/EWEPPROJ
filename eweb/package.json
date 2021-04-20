@@ -1,0 +1,11 @@
+{
+  "name": "eweb",
+  "version": "1.0.0",
+  "description": "Package for All eweb repo",
+  "main": "index.js",
+  "author": "",
+  "dependencies": {
+    "bootstrap": "4.0.0",
+    "jquery": "3.3.1"
+  }
+}
