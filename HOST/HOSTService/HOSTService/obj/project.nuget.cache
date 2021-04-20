@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "f0ee9XpXx3jLmV0h2dhujrhxGP3u5LDlvj4YLvl64EfYv85GUfFiBxq5XhBwkwrGG122U5HqafRWqumHrVGMQg==",
+  "success": true,
+  "projectFilePath": "D:\\dotnet\\EWEPPROJ\\HOST\\HOSTService\\HOSTService\\HOSTService.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\phamn\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\phamn\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

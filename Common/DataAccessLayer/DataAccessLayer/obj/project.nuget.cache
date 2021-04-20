@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "dkIujZQNKSkcPto504zKGSaTYe/oUbb/A5kmDxw/+86OTJ6cD51w+HIYXpOJ+oo6TtayPIBNIYjkJ2x/+rxIAA==",
+  "success": true,
+  "projectFilePath": "D:\\dotnet\\EWEPPROJ\\Common\\DataAccessLayer\\DataAccessLayer\\DataAccessLayer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\phamn\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\phamn\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
