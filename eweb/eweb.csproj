@@ -3,7 +3,12 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MongoDB.Bson" Version="2.12.2"/>
-    <PackageReference Include="MongoDB.Driver" Version="2.12.2"/>
+    <PackageReference Include="MongoDB.Bson" Version="2.12.2" />
+    <PackageReference Include="MongoDB.Driver" Version="2.12.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AppCore\appcore.csproj" />
+    <ProjectReference Include="..\BDS\BDSService\BDSService.csproj" />
+    <ProjectReference Include="..\HOST\HOSTService\HOSTService.csproj" />
   </ItemGroup>
 </Project>
