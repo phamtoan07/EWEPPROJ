@@ -20,7 +20,7 @@ namespace Eweb.Common.DataAccessLayer
             mv_strConnectionString = strConnectionString;
         }
         
-        public DataSet ExecuteSQLReturnDataset(BusinessCommand pv_bCommand)
+        public DataSet ExecuteCMDReturnDataset(BusinessCommand pv_bCommand)
         {
             DataSet v_ds = new DataSet();
 

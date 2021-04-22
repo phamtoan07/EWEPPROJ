@@ -9,6 +9,10 @@
   <ItemGroup>
     <ProjectReference Include="..\AppCore\appcore.csproj" />
     <ProjectReference Include="..\BDS\BDSService\BDSService.csproj" />
+    <ProjectReference Include="..\Common\DataAccessLayer\DataAccessLayer.csproj" />
     <ProjectReference Include="..\HOST\HOSTService\HOSTService.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\SA\" />
   </ItemGroup>
 </Project>
