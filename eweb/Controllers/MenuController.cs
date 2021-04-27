@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 using Eweb.Common.DataAccessLayer;
 namespace eweb.Controllers
 {
-    public class MenusController : Controller
+    public class MenuController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
 
-        public string CoreInquiry()
+        public Object CoreInquiry()
         {
-            var v_result = string.Empty;
+            var v_result = new Object();
             var v_obj = new MongoDbHelper();
             var v_connectionString = "mongodb://HOST:*****@localhost:27017/?authSource=HOST&readPreference=primary&appname=MongoDB%20Compass&ssl=false";
             try

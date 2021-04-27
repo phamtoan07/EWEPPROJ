@@ -1,5 +1,7 @@
 using System;
 using System.Data;
+using System.Collections;
+using System.Collections.Generic;
 using Eweb.Common.DataAccessLayer;
 using MongoDB.Driver;
 using MongoDB.Bson;
@@ -12,16 +14,40 @@ namespace Eweb.Common.DataAccessLayer
         {
             
         }
-        public string ExecuteCMDReturnDataset(string ConnectionString, string CommandType, string CommandText)
+
+        [Obsolete]
+        public Object ExecuteCMDReturnDataset(string ConnectionString, string CommandType, string CommandText)
         {
-            string ds  = string.Empty;
 
-            var client = new MongoClient(ConnectionString);
+            string username = "HOST";
+            string password = "HOST";
+            string mongoDbAuthMechanism = "SCRAM-SHA-1";
+            MongoInternalIdentity internalIdentity = 
+                    new MongoInternalIdentity("HOST", username);
+            PasswordEvidence passwordEvidence = new PasswordEvidence(password);
+            MongoCredential mongoCredential = 
+                new MongoCredential(mongoDbAuthMechanism, 
+                        internalIdentity, passwordEvidence);
+            List<MongoCredential> credentials = 
+                    new List<MongoCredential>() {mongoCredential};
+
+
+            MongoClientSettings settings = new MongoClientSettings();
+            // comment this line below if your mongo doesn't run on secured mode
+            settings.Credentials = credentials;
+            String mongoHost = "127.0.0.1";
+            MongoServerAddress address = new MongoServerAddress(mongoHost);
+            settings.Server = address;
+
+            MongoClient client = new MongoClient(settings);
+
             var database = client.GetDatabase("HOST");
-            var  v_collection = database.GetCollection<BsonDocument>("cmdmenu");
-            ds = v_collection.ToString();
+            var mongoCollection = database.GetCollection<BsonDocument>("cmdmenu");
+            var documents = mongoCollection.AsQueryable();
 
-            return ds;
+            var v_strJson =  documents.ToList().ConvertAll(BsonTypeMapper.MapToDotNetValue);
+
+            return v_strJson;
         }
     }
 }
