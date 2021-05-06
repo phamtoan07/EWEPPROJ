@@ -16,7 +16,7 @@ public class BDSService : IBDSService
 //         Dim v_strACTIONFLAG As String = String.Empty
         try
         {
-            pv_strMessage = TripleDesDecryptData(ref pv_strMessage);
+            pv_strMessage = modCommond.TripleDesEncryptData(ref pv_strMessage);
             return v_lngErr;
         }
         catch (Exception e)
@@ -212,38 +212,6 @@ public class BDSService : IBDSService
 //             Throw ex
 //         End Try
 //     End Function
-    }
-//         
-    public string TripleDesDecryptData(ref string v_Data) 
-    {
-        ICryptoTransform ct;
-        MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-        TripleDESCryptoServiceProvider des = new TripleDESCryptoServiceProvider();
-        try
-        {
-            string v_strKey1, v_strKey2, v_strKey3, v_strKey4, v_strKey5;
-            v_strKey1 = "VND";
-            v_strKey2 = "SBnG";
-            v_strKey3 = "USD";
-            v_strKey4 = "EUR";
-            v_strKey5 = "F31";
-            Byte[] m_iv = {1, 1, 2, 8, 2, 9, 2, 9};
-            des.Key = md5.ComputeHash(Encoding.Unicode.GetBytes(v_strKey1 + v_strKey2 + v_strKey3 + v_strKey4 + v_strKey5));
-            des.IV = m_iv;
-            ct = des.CreateDecryptor();
-
-            byte[] input = Convert.FromBase64String(v_Data);
-
-            byte[]output = ct.TransformFinalBlock(input, 0, input.Length);
-
-            return Encoding.Unicode.GetString(output);
-        }
-        catch (Exception ex)
-        {
-            md5 = null;
-            des = null;
-            throw ex;
-        }
     }
 }
 //     Implements IBDSService
