@@ -30,6 +30,11 @@ namespace Eweb.Common.CommonLibrary
             }
             return v_strFormat;
         }
+
+        #region Error code constants
+            public const long ERR_SYSTEM_OK = 0;
+            public const long ERR_SYSTEM_START = ERR_SYSTEM_OK - 1;
+        #endregion
         public CommonConst(){}
     }
 }

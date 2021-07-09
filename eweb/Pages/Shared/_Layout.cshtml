@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -28,10 +29,13 @@
                 </div>
             </div>
         </nav>
-    </header>
+        <div class="shadow p-3">@await Component.InvokeAsync("MenuBar")</div>
+
+        <div class="shadow p-3"><vc:MenuBar /></div>
+
     <div class="container">
         <main role="main" class="pb-3">
-            @RenderBody()
+            @RenderBody() 
         </main>
     </div>
 

@@ -1,10 +1,8 @@
 using System;
-using System.Data;
-using System.Collections;
 using System.Collections.Generic;
-using Eweb.Common.DataAccessLayer;
 using MongoDB.Driver;
 using MongoDB.Bson;
+using System.Text.Json;
 namespace Eweb.Common.DataAccessLayer
 {
     public class MongoDbHelper
@@ -16,7 +14,7 @@ namespace Eweb.Common.DataAccessLayer
         }
 
         [Obsolete]
-        public Object ExecuteCMDReturnDataset(string ConnectionString, string CommandType, string CommandText)
+        public string ExecuteCMDReturnDataset(string ConnectionString, string CommandType, string CommandText)
         {
 
             string username = "HOST";
@@ -31,7 +29,6 @@ namespace Eweb.Common.DataAccessLayer
             List<MongoCredential> credentials = 
                     new List<MongoCredential>() {mongoCredential};
 
-
             MongoClientSettings settings = new MongoClientSettings();
             // comment this line below if your mongo doesn't run on secured mode
             settings.Credentials = credentials;
@@ -42,12 +39,24 @@ namespace Eweb.Common.DataAccessLayer
             MongoClient client = new MongoClient(settings);
 
             var database = client.GetDatabase("HOST");
-            var mongoCollection = database.GetCollection<BsonDocument>("cmdmenu");
-            var documents = mongoCollection.AsQueryable();
+            //var mongoCollection = database.GetCollection<BsonDocument>("cmdmenu");
 
-            var v_strJson =  documents.ToList().ConvertAll(BsonTypeMapper.MapToDotNetValue);
+            IMongoCollection<BsonDocument> collection = database.GetCollection<BsonDocument>("cmdmenu");
 
-            return v_strJson;
+            var findOptions = new FindOptions<BsonDocument>();
+
+            findOptions.Projection = "{'_id': 0}";
+
+            // Other options
+            findOptions.Sort = Builders<BsonDocument>.Sort.Ascending("cmdid");
+            findOptions.Limit = int.MaxValue;
+
+            var filter = Builders<BsonDocument>.Filter.Empty;
+
+            //var list = collection.Find(filter).Project(findOptions.Projection).Sort(findOptions.Sort);
+            var list = collection.Find(filter).Project(findOptions.Projection).Sort(findOptions.Sort).ToList();
+
+            return list.ToJson().ToString();
         }
     }
 }
