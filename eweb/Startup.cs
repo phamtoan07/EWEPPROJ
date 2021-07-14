@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 
 namespace eweb
@@ -43,6 +40,14 @@ namespace eweb
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                ServeUnknownFileTypes = true,
+                FileProvider = new PhysicalFileProvider(
+                      Path.Combine(env.ContentRootPath, "node_modules")),
+                RequestPath = "/node_modules"
+            });
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -55,7 +60,7 @@ namespace eweb
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-          
+
         }
     }
 }

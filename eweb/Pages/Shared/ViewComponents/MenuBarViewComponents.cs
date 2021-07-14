@@ -16,12 +16,12 @@ namespace WebApplication.ViewComponents {
             try
             {
                 v_result = v_obj.ExecuteCMDReturnDataset(v_connectionString, "", "");
+                _listMenu = JsonConvert.DeserializeObject<List<cmdmenu>>(v_result);
             }
             catch (Exception e)
             {
                 v_result = "-1";
             }
-            var _listMenu = JsonConvert.DeserializeObject<cmdmenu>(v_result);
             return View(_listMenu);
         }
     }
