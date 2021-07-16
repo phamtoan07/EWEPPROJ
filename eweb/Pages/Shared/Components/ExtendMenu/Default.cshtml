@@ -1,0 +1,13 @@
+@model IEnumerable<Eweb.Models.SA.Menu.cmdmenu>
+<a class="navbar-link">
+    More
+</a>
+
+<div class="navbar-dropdown">
+    @foreach (var m in Model)
+    {
+        <a class="navbar-item">
+            @m.Cmdname
+        </a>
+    }
+</div>

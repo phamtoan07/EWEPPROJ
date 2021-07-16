@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Eweb.ViewComponents
 {
-    public class MenuBarViewComponent : ViewComponent
+    public class ExtendMenuViewComponent : ViewComponent
     {
 
         public async Task<IViewComponentResult> InvokeAsync()
@@ -26,7 +26,7 @@ namespace Eweb.ViewComponents
             var v_connectionString = "mongodb://HOST:*****@localhost:27017/?authSource=HOST&readPreference=primary&appname=MongoDB%20Compass&ssl=false";
             try
             {
-                v_result = await v_obj.ExecuteCMDReturnDataset(v_connectionString, "", "");
+                v_result = await v_obj.ExecuteCMDReturnDatasetByFilter(v_connectionString, "", "");
                 _listMenu = await Task.Run(() => JsonConvert.DeserializeObject<List<cmdmenu>>(v_result));
                 return _listMenu;
             }

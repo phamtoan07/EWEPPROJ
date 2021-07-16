@@ -16,11 +16,13 @@ namespace Eweb.Models.SA.Menu
         private string _tltxcd;
         private string _mnviewcode;
         private bool _display;
+        private bool _extended;
 
 
         public cmdmenu(string v_strCMDID, string v_strModcode, string v_strObjname, string v_strAuthcode,
-                       string v_strPrid = "", long v_dblLev = 1, bool v_isLast = true, string v_strMenutype = "", 
-                       string v_strCmdname = "", string v_strTltxcd = "", string v_strMnviewcode = "", bool v_isDisplay = true)
+                       string v_strPrid = "", long v_dblLev = 1, bool v_isLast = true, string v_strMenutype = "",
+                       string v_strCmdname = "", string v_strTltxcd = "", string v_strMnviewcode = "",
+                       bool v_isDisplay = true, bool v_isExtended = false)
         {
             Cmdid = v_strCMDID;
             Prid = v_strPrid;
@@ -34,6 +36,7 @@ namespace Eweb.Models.SA.Menu
             Tltxcd = v_strTltxcd;
             Mnviewcode = v_strMnviewcode;
             Display = v_isDisplay;
+            Extended = v_isExtended;
         }
         public cmdmenu()
         {
@@ -52,5 +55,6 @@ namespace Eweb.Models.SA.Menu
         public string Tltxcd { get => _tltxcd; set => _tltxcd = value; }
         public string Mnviewcode { get => _mnviewcode; set => _mnviewcode = value; }
         public bool Display { get => _display; set => _display = value; }
+        public bool Extended { get => _extended; set => _extended = value; }
     }
 }
