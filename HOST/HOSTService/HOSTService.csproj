@@ -4,4 +4,14 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\CommonLibrary\CommonLibrary.csproj" />
+    <ProjectReference Include="..\..\Common\DataAccessLayer\DataAccessLayer.csproj" />
+    <ProjectReference Include="..\..\Configurations\Configurations.csproj" />
+  </ItemGroup>
+
 </Project>

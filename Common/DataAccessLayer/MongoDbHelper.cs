@@ -5,15 +5,44 @@ using MongoDB.Bson;
 using System.Threading.Tasks;
 using Eweb.Common.CommonLibrary;
 using Newtonsoft.Json;
+using Eweb.Common.Configurations;
 
 namespace Eweb.Common.DataAccessLayer
 {
     public class MongoDbHelper
     {
         private DataAccessEngine _dataAccessEngine;
-        public MongoDbHelper()
+        private static IMongoDatabase _mongoDatabase;
+        private static ConnectionConfiguration _connectionConfig;
+        public MongoDbHelper(ConnectionConfiguration connectionConfig)
         {
+            _connectionConfig = connectionConfig;
+            GennerateDatabase(connectionConfig);
+        }
 
+        public void GennerateDatabase(ConnectionConfiguration connectionConfig)
+        {
+            string databaseName = connectionConfig.DatabaseName;
+            string username = connectionConfig.UserName;
+            string password = connectionConfig.Password;
+            string mongoDbAuthMechanism = connectionConfig.DbAuthMechanism;
+            MongoInternalIdentity internalIdentity =
+                    new MongoInternalIdentity(databaseName, username);
+            PasswordEvidence passwordEvidence = new PasswordEvidence(password);
+            MongoCredential mongoCredential =
+                new MongoCredential(mongoDbAuthMechanism,
+                        internalIdentity, passwordEvidence);
+
+            MongoClientSettings settings = new MongoClientSettings();
+            // comment this line below if your mongo doesn't run on secured mode
+            settings.Credential = mongoCredential;
+            String mongoHost = connectionConfig.IpAddress;
+            MongoServerAddress address = new MongoServerAddress(mongoHost);
+            settings.Server = address;
+
+            MongoClient client = new MongoClient(settings);
+
+            _mongoDatabase = client.GetDatabase(databaseName);
         }
 
         public async Task<string> ExecuteCMDReturnDataset(string ConnectionString, string CommandType, string CommandText)
@@ -61,34 +90,11 @@ namespace Eweb.Common.DataAccessLayer
             return list.ToJson().ToString();
         }
 
-        public async Task<string> ExecuteCMDReturnDatasetByFilter(string ConnectionString, string CommandType, string CommandText, string Filter)
+        public async Task<string> ExecuteCMDReturnDatasetByFilter(string CommandType, string CommandText, string Filter)
         {
-
-            string username = "HOST";
-            string password = "HOST";
-            string mongoDbAuthMechanism = "SCRAM-SHA-1";
-            MongoInternalIdentity internalIdentity =
-                    new MongoInternalIdentity("HOST", username);
-            PasswordEvidence passwordEvidence = new PasswordEvidence(password);
-            MongoCredential mongoCredential =
-                new MongoCredential(mongoDbAuthMechanism,
-                        internalIdentity, passwordEvidence);
-            List<MongoCredential> credentials =
-                    new List<MongoCredential>() { mongoCredential };
-
-            MongoClientSettings settings = new MongoClientSettings();
-            // comment this line below if your mongo doesn't run on secured mode
-            settings.Credentials = credentials;
-            String mongoHost = "127.0.0.1";
-            MongoServerAddress address = new MongoServerAddress(mongoHost);
-            settings.Server = address;
-
-            MongoClient client = new MongoClient(settings);
-
-            var database = client.GetDatabase("HOST");
             //var mongoCollection = database.GetCollection<BsonDocument>("cmdmenu");
 
-            IMongoCollection<BsonDocument> collection = database.GetCollection<BsonDocument>("cmdmenu");
+            IMongoCollection<BsonDocument> collection = _mongoDatabase.GetCollection<BsonDocument>("cmdmenu");
 
             var findOptions = new FindOptions<BsonDocument>();
 
@@ -109,10 +115,6 @@ namespace Eweb.Common.DataAccessLayer
             {
                 if (item.Datatype == "bool")
                 {
-                    //if (item.Operator == "=")
-                    //{
-                    //    builder = Builders<BsonDocument>.Filter.Eq()
-                    //}
                     listFilter &= builder.Eq(item.Key, Convert.ToBoolean(item.Value));
                 }
                 else if (item.Datatype == "string")

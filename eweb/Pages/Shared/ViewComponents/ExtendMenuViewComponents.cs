@@ -1,17 +1,24 @@
-using System;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.Mvc;
-using Eweb.Models.SA.Menu;
-using System.Collections.Generic;
-using Eweb.Common.DataAccessLayer;
 using Eweb.Common.CommonLibrary;
-using System.Threading.Tasks;
+using Eweb.Common.Configurations;
+using Eweb.Models.SA.Menu;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Eweb.ViewComponents
 {
     public class ExtendMenuViewComponent : ViewComponent
     {
+        private readonly IConfiguration Configuration;
+
+        public ExtendMenuViewComponent(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
@@ -23,8 +30,12 @@ namespace Eweb.ViewComponents
         {
             IEnumerable<cmdmenu> _listMenu;
             var v_result = string.Empty;
-            var v_obj = new MongoDbHelper();
-            var v_connectionString = "mongodb://HOST:*****@localhost:27017/?authSource=HOST&readPreference=primary&appname=MongoDB%20Compass&ssl=false";
+
+            var connectionConfig = new ConnectionConfiguration();
+            Configuration.GetSection(ConnectionConfiguration.ConnectionConfig).Bind(connectionConfig);
+
+            var v_obj = new Eweb.HOSTService.HOSTService(connectionConfig);
+
             try
             {
                 string v_strFilter = string.Empty;
@@ -39,7 +50,7 @@ namespace Eweb.ViewComponents
                 listFilter.Add(filter);
 
                 modCommond.BuildJsonFormat(listFilter, ref v_strFilter);
-                v_result = await v_obj.ExecuteCMDReturnDatasetByFilter(v_connectionString, "", "", v_strFilter);
+                v_result = await v_obj.ExcuteCmdReturnDataset(v_strFilter);
                 _listMenu = await Task.Run(() => JsonConvert.DeserializeObject<List<cmdmenu>>(v_result));
                 return _listMenu;
             }
