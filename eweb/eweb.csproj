@@ -3,6 +3,12 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Models\**" />
+    <Content Remove="Models\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="Models\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="node_modules\bulma\css\bulma-rtl.css" />
     <Content Include="node_modules\bulma\css\bulma-rtl.min.css" />
     <Content Include="node_modules\bulma\css\bulma.css" />
@@ -28,7 +34,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\SA\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="node_modules\bulma\bulma.sass" />
