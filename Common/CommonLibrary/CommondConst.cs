@@ -1,5 +1,5 @@
-using System;
 using System.Globalization;
+using System.Collections.Generic;
 namespace Eweb.Common.CommonLibrary
 {
     public class CommonConst
@@ -16,13 +16,13 @@ namespace Eweb.Common.CommonLibrary
             string v_strFormat = string.Empty;
             switch (v_strType)
             {
-                case gc_const_getdatetime : 
+                case gc_const_getdatetime:
                     v_strFormat = v_provider.DateTimeFormat.FullDateTimePattern;
                     break;
-                case gc_const_getdate : 
+                case gc_const_getdate:
                     v_strFormat = v_provider.DateTimeFormat.ShortDatePattern;
                     break;
-                case gc_const_gettime :
+                case gc_const_gettime:
                     v_strFormat = v_provider.DateTimeFormat.ShortTimePattern;
                     break;
                 default:
@@ -32,9 +32,20 @@ namespace Eweb.Common.CommonLibrary
         }
 
         #region Error code constants
-            public const long ERR_SYSTEM_OK = 0;
-            public const long ERR_SYSTEM_START = ERR_SYSTEM_OK - 1;
+        public const long ERR_SYSTEM_OK = 0;
+        public const long ERR_SYSTEM_START = ERR_SYSTEM_OK - 1;
         #endregion
-        public CommonConst(){}
+
+        #region Message schema
+        public string gc_SCHEMA_OBJMESSAGE_HEADER = "[";
+        public string gc_SCHEMA_OBJMESSAGE_FOOTER = "\n]";
+        public IEnumerable<string> gc_KeyMsg = new string[]
+        { "TXDATE", "TXNUM", "TXTIME", "TELLERID", "BRID", "LOCAL", "MSGTYPE",
+          "OBJNAME", "ACTIONFLAG", "CMDINQUIRY", "CLAUSE", "FUNCTIONANE", "AUTOID",
+          "REFERENCE", "RESERVER", "IPADDRESS", "CMDTYPE", "PARENTOBJNAME", "PARENTCLAUSE"
+        };
+        #endregion
+
+        public CommonConst() { }
     }
 }

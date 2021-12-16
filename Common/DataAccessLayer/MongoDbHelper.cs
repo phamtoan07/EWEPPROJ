@@ -96,6 +96,8 @@ namespace Eweb.Common.DataAccessLayer
 
             IMongoCollection<BsonDocument> collection = _mongoDatabase.GetCollection<BsonDocument>("cmdmenu");
 
+            string ret = string.Empty;
+
             var findOptions = new FindOptions<BsonDocument>();
 
             findOptions.Projection = "{'_id': 0}";
@@ -105,8 +107,8 @@ namespace Eweb.Common.DataAccessLayer
             findOptions.Limit = int.MaxValue;
 
             //Filter
-            List<JsonElement> jsonFilterList = new List<JsonElement>();
-            jsonFilterList = JsonConvert.DeserializeObject<List<JsonElement>>(Filter);
+            List<JsonFilterElement> jsonFilterList = new List<JsonFilterElement>();
+            jsonFilterList = JsonConvert.DeserializeObject<List<JsonFilterElement>>(Filter);
 
             var builder = Builders<BsonDocument>.Filter;
             var listFilter = FilterDefinition<BsonDocument>.Empty;
@@ -153,8 +155,8 @@ namespace Eweb.Common.DataAccessLayer
                 }
             }
             var list = collection.Find(listFilter).Project(findOptions.Projection).Sort(findOptions.Sort).ToList();
-
-            return list.ToJson().ToString();
+            ret = list.ToJson().ToString();
+            return await Task.FromResult(ret);
         }
     }
 }

@@ -4,7 +4,7 @@ using Eweb.Common.Configurations;
 using System;
 using System.Threading.Tasks;
 
-namespace Eweb.HOSTService
+namespace Eweb.HOST.HOSTService
 {
 
     public class HOSTService : IHOSTService
@@ -16,7 +16,7 @@ namespace Eweb.HOSTService
             _connectionConfig = connectionConfig;
         }
 
-        public async Task<string> ExcuteCmdReturnDataset(string v_strFilter)
+        public async Task<string> ExcuteCmdReturnDatasetByFilter(string v_strFilter)
         {
             var v_result = string.Empty;
             var v_obj = new MongoDbHelper(_connectionConfig);

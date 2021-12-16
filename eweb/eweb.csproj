@@ -25,10 +25,10 @@
     <ProjectReference Include="..\AppCore\appcore.csproj" />
     <ProjectReference Include="..\BDS\BDSService\BDSService.csproj" />
     <ProjectReference Include="..\Configurations\Configurations.csproj" />
-    <ProjectReference Include="..\HOST\HOSTService\HOSTService.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\SA\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="node_modules\bulma\bulma.sass" />

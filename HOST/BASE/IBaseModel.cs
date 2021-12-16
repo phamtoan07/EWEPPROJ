@@ -1,4 +1,4 @@
-namespace Eweb.Models.Base
+﻿namespace Eweb.HOSTService.Base
 {
     /// <summary>
     /// Represents base grandnode entity model

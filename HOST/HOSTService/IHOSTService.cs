@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Eweb.HOSTService
+namespace Eweb.HOST
 {
 
     public interface IHOSTService
@@ -15,6 +15,5 @@ namespace Eweb.HOSTService
 
         long MessageBytes(ref byte[] v_arrByteMessage);
 
-        //End Namespace
     }
 }

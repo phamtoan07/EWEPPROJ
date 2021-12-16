@@ -1,6 +1,7 @@
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using Eweb.Models.Base;
-namespace Eweb.Models.SA.Menu
+using Eweb.HOSTService.Base;
+namespace Eweb.HOST.SA
 {
     public class cmdmenu : IBaseModel
     {
@@ -17,6 +18,7 @@ namespace Eweb.Models.SA.Menu
         private string _mnviewcode;
         private bool _display;
         private bool _extended;
+        private List<cmdmenu> _listChild;
 
 
         public cmdmenu(string v_strCMDID, string v_strModcode, string v_strObjname, string v_strAuthcode,
@@ -56,5 +58,19 @@ namespace Eweb.Models.SA.Menu
         public string Mnviewcode { get => _mnviewcode; set => _mnviewcode = value; }
         public bool Display { get => _display; set => _display = value; }
         public bool Extended { get => _extended; set => _extended = value; }
+        public List<cmdmenu> ListChild { get => _listChild; set => _listChild = value; }
+
+        public List<cmdmenu> getChildMenu(string cmdid, long lev, List<cmdmenu> list)
+        {
+            List<cmdmenu> ret = new List<cmdmenu>();
+
+            if (lev == 0)
+            {
+                return ret;
+            }
+
+            ret = list.FindAll(x => (x.Lev == lev + 1 && x.Prid == cmdid));
+            return ret;
+        }
     }
 }

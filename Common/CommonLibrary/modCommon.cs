@@ -8,6 +8,7 @@ namespace Eweb.Common.CommonLibrary
 {
     public static class modCommond
     {
+        public static CommonConst commonConst = new CommonConst();
         public static string TripleDesEncryptData(ref string v_Data)
         {
             MD5CryptoServiceProvider hashMD5Provider = new MD5CryptoServiceProvider();
@@ -76,19 +77,138 @@ namespace Eweb.Common.CommonLibrary
                 v_strOutput = JsonConvert.SerializeObject(v_listInput);
             }
         }
+
+        public static string BuildXMLObjMsg(string pv_strTxDate = "",
+                                   string pv_strBranchId = "",
+                                   string pv_strTxTime = "",
+                                   string pv_strTellerId = "",
+                                   string pv_strLocal = "",
+                                   string pv_strMsgType = "",
+                                   string pv_strObjName = "",
+                                   string pv_strActionFlag = "",
+                                   string pv_strCmdInquiry = "",
+                                   string pv_strClause = "",
+                                   string pv_strFuncName = "",
+                                   string pv_strAutoId = "",
+                                   string pv_strTxNum = "",
+                                   string pv_strReference = "",
+                                   string pv_strReserver = "",
+                                   string pv_strIPAddress = "",
+                                   string pv_strCmdType = "T",
+                                   string pv_strPrarentObjName = "",
+                                   string pv_strParentClause = "")
+        {
+            string v_strResult = string.Empty;
+            string jsonString;
+            v_strResult += commonConst.gc_SCHEMA_OBJMESSAGE_HEADER + "\n{";
+            try
+            {
+                foreach (var i in commonConst.gc_KeyMsg)
+                {
+                    jsonString = string.Empty;
+                    jsonString += "\"" + i.ToString() + "\"";
+                    switch (i.ToString())
+                    {
+                        case "TXDATE":
+                            jsonString += ":\"" + pv_strTxDate + "\",";
+                            break;
+                        case "BRID":
+                            jsonString += ":\"" + pv_strBranchId + "\",";
+                            break;
+                        case "TXTIME":
+                            jsonString += ":\"" + pv_strTxTime + "\",";
+                            break;
+                        case "TELLERID":
+                            jsonString += ":\"" + pv_strTellerId + "\",";
+                            break;
+                        case "LOCAL":
+                            jsonString += ":\"" + pv_strLocal + "\",";
+                            break;
+                        case "MSGTYPE":
+                            jsonString += ":\"" + pv_strMsgType + "\",";
+                            break;
+                        case "OBJNAME":
+                            jsonString += ":\"" + pv_strObjName + "\",";
+                            break;
+                        case "ACTIONFLAG":
+                            jsonString += ":\"" + pv_strActionFlag + "\",";
+                            break;
+                        case "CMDINQUIRY":
+                            jsonString += ":\"" + pv_strCmdInquiry + "\",";
+                            break;
+                        case "CLAUSE":
+                            jsonString += ":" + pv_strClause + ",";
+                            break;
+                        case "FUNCTIONANE":
+                            jsonString += ":\"" + pv_strFuncName + "\",";
+                            break;
+                        case "AUTOID":
+                            jsonString += ":\"" + pv_strAutoId + "\",";
+                            break;
+                        case "TXNUM":
+                            jsonString += ":\"" + pv_strTxNum + "\",";
+                            break;
+                        case "REFERENCE":
+                            jsonString += ":\"" + pv_strReference + "\",";
+                            break;
+                        case "RESERVER":
+                            jsonString += ":\"" + pv_strReserver + "\",";
+                            break;
+                        case "IPADDRESS":
+                            jsonString += ":\"" + pv_strIPAddress + "\",";
+                            break;
+                        case "CMDTYPE":
+                            jsonString += ":\"" + pv_strCmdType + "\",";
+                            break;
+                        case "PARENTOBJNAME":
+                            jsonString += ":\"" + pv_strPrarentObjName + "\",";
+                            break;
+                        case "PARENTCLAUSE":
+                            jsonString += ":\"" + pv_strParentClause + "\",";
+                            break;
+                    }
+                    v_strResult += "\n" + jsonString;
+                }
+
+                v_strResult += "\n}" + commonConst.gc_SCHEMA_OBJMESSAGE_FOOTER;
+            }
+            catch (Exception e)
+            {
+                v_strResult = null;
+            }
+            return v_strResult;
+        }
     }
     public class JsonElement
+    {
+        private string _key;
+        private string _value;
+
+        public JsonElement()
+        {
+
+        }
+        public JsonElement(string key, string value)
+        {
+            this.Key = key;
+            this.Value = value;
+        }
+
+        public string Key { get => _key; set => _key = value; }
+        public string Value { get => _value; set => _value = value; }
+    }
+    public class JsonFilterElement
     {
         private string _key;
         private string _value;
         private string _operator;
         private string _datatype;
 
-        public JsonElement()
+        public JsonFilterElement()
         {
 
         }
-        public JsonElement(string key, string value, string v_operator, string datatype)
+        public JsonFilterElement(string key, string value, string v_operator, string datatype)
         {
             this.Key = key;
             this.Value = value;

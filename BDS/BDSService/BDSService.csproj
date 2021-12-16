@@ -5,5 +5,8 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\CommonLibrary\CommonLibrary.csproj" />
+    <ProjectReference Include="..\..\Configurations\Configurations.csproj" />
+    <ProjectReference Include="..\..\HOST\HOSTService\HOSTService.csproj" />
+    <ProjectReference Include="..\..\HOST\SA\SA.csproj" />
   </ItemGroup>
 </Project>
